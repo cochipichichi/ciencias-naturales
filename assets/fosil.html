@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>🦴 Registro fósil — 3D/AR</title>
+  <link rel="stylesheet" href="../style.css">
+  <!-- model-viewer (CDN) -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>model-viewer{width:100%;height:70vh;background:#0b1320;border-radius:1rem;border:1px solid #1f2a37}</style>
+</head>
+<body>
+  <nav class="controls">
+    <span class="control-title">🛠️ Controles:</span>
+    <a class="control-btn" href="../index.html">🏠</a>
+    <button class="control-btn" onclick="handleSpeak()">🗣️</button>
+    <button class="control-btn" onclick="toggleContrast(this)">🌓</button>
+    <button class="control-btn" onclick="fontDelta(1)">A+</button>
+    <button class="control-btn" onclick="fontDelta(-1)">A−</button>
+    <button class="control-btn" onclick="toggleLang(this)">🌐</button>
+    <button class="control-btn" onclick="toggleGuide(true)">🧠</button>
+    <button class="control-btn" onclick="toggleRuler(this)">🔍</button>
+    <span class="spacer"></span>
+    <button class="control-btn" onclick="handleStop()">⏹</button>
+  </nav>
+
+  <main class="section" id="intro">
+    <h1>🦴 🦴 Registro fósil — 3D / AR</h1>
+    <p>Observa el modelo 3D del fósil y analiza rasgos que sustentan una línea de tiempo evolutiva.</p>
+
+    <div class="card">
+      <model-viewer src="../assets/models/fosil.glb"
+        ar ar-modes="webxr scene-viewer quick-look"
+        camera-controls
+        exposure="0.9" shadow-intensity="1" environment-image="neutral"
+        touch-action="pan-y"
+        poster="../assets/img/poster_fosil.png">
+        <div class="badge" slot="ar-button">📱 Ver en AR</div>
+      </model-viewer>
+      <div class="btn-row" style="margin-top:1rem">
+        <button class="btn" onclick="document.querySelector('model-viewer').enterAR()">📱 Entrar en AR</button>
+        <a class="btn" href="../index.html">⬅️ Volver</a>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal" id="guideModal"><div class="box"><span class="close" onclick="toggleGuide(false)">✖</span><h3>🧠 Guía</h3><p>Usa el dedo o mouse para rotar/zoom. En móvil compatible, toca “Ver en AR”.</p></div></div>
+  <div id="ruler" class="ruler"></div>
+  <script src="../js/script.js"></script>
+</body>
+</html>

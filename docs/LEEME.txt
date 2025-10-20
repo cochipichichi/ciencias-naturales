@@ -1,0 +1,8 @@
+Coloca aquí las guías en PDF:
+- docs/guia_docente.pdf
+- docs/guia_estudiante.pdf
+
+Modelos 3D (GLB) en assets/models:
+- fosil.glb
+- homologia.glb
+- adn.glb

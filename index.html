@@ -1,0 +1,158 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ciencias Natrulares — Evidencias de la Evolución (OA2)</title>
+  <meta name="theme-color" content="#0c0f10">
+  <link rel="manifest" href="pwa/manifest.webmanifest">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="preload" href="style.css" as="style">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+  <!-- Reading ruler -->
+  <div id="ruler" class="ruler" aria-hidden="true"></div>
+
+  <!-- Controls -->
+  <nav class="controls" role="navigation" aria-label="Barra de controles">
+    <span class="control-title">🛠️ <span data-i18n-es="Controles" data-i18n-en="Controls">Controles</span>:</span>
+    <button class="control-btn" id="home" title="Inicio" aria-label="Inicio" onclick="scrollTopSmooth()">🏠</button>
+    <button class="control-btn" id="speak" title="Narrar" aria-label="Narrar" onclick="handleSpeak()">🗣️</button>
+    <button class="control-btn" id="contrast" title="Alto contraste" aria-label="Alto contraste" onclick="toggleContrast(this)">🌓</button>
+    <button class="control-btn" id="inc" title="Aumentar tamaño de letra" aria-label="Aumentar tamaño de letra" onclick="fontDelta(1)">A+</button>
+    <button class="control-btn" id="dec" title="Disminuir tamaño de letra" aria-label="Disminuir tamaño de letra" onclick="fontDelta(-1)">A−</button>
+    <button class="control-btn" id="lang" title="Cambiar idioma" aria-label="Cambiar a inglés" onclick="toggleLang(this)">🌐</button>
+    <button class="control-btn" id="guide" title="Guía" aria-label="Guía" onclick="toggleGuide(true)">🧠</button>
+    <button class="control-btn" id="rul" title="Regla de lectura" aria-label="Regla de lectura" onclick="toggleRuler(this)">🔍</button>
+    <span class="spacer"></span>
+    <button class="control-btn" id="stop" title="Detener narración" aria-label="Detener narración" onclick="handleStop()">⏹</button>
+  </nav>
+
+  <header class="header">
+    <div class="hero" id="intro">
+      <h1 data-i18n-es="Ciencias Natrulares — Evidencias de la Evolución (OA2)"
+          data-i18n-en="Natural Sciences — Evidence of Evolution (OA2)">Ciencias Natrulares — Evidencias de la Evolución (OA2)</h1>
+      <p data-i18n-es="Explora fósiles, anatomía comparada, embriología y ADN; comprende la selección natural y el aporte de Darwin y Wallace."
+         data-i18n-en="Explore fossils, comparative anatomy, embryology and DNA; understand natural selection and the contributions of Darwin & Wallace.">
+         Explora fósiles, anatomía comparada, embriología y ADN; comprende la selección natural y el aporte de Darwin y Wallace.
+      </p>
+      <div class="btn-row">
+        <a class="btn" href="#modelos">👁️ Ver en 3D</a>
+        <a class="btn" href="#modelos" title="Realidad Aumentada">📱 Ver en AR</a>
+        <a class="btn" href="#modelos" title="Realidad Virtual">🥽 Ver en VR</a>
+        <a class="btn" href="quiz/quiz.html">🧪 Quiz OA2</a>
+        <a class="btn" href="ticket/ticket.html">🎟️ Ticket de salida</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2>🔬 Objetivo de Aprendizaje N°2</h2>
+      <p>Analizar e interpretar datos para proveer evidencias de que la diversidad de organismos es el resultado de la evolución: registro fósil, homologías, embriología, ADN; postulados de selección natural; aportes de Darwin y Wallace.</p>
+      <div class="badge">⏱️ 90 min — 25 preguntas por asignatura</div>
+      <div class="badge">🧭 Indicadores: evidencias, especiación, selección natural, Darwin & Wallace</div>
+    </section>
+
+    <section class="section">
+      <h2>🧱 Evidencias</h2>
+      <div class="grid" id="modelos">
+        <article class="card">
+          <h3>🦴 Registro fósil</h3>
+          <p>Observa una línea de tiempo con fósiles (placeholders). Reemplaza <code>assets/models/fosil.glb</code> con tu modelo GLB.</p>
+          <div class="btn-row">
+            <button class="btn" onclick="location.href='assets/fosil.html'">👁️ 3D</button>
+            <button class="btn" onclick="location.href='assets/fosil.html#ar'">📱 AR</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3>🫱🏻‍🫲🏽 Estructuras homólogas</h3>
+          <p>Compara extremidades de vertebrados para identificar homologías vs analogías. Reemplaza <code>assets/models/homologia.glb</code>.</p>
+          <div class="btn-row">
+            <button class="btn" onclick="location.href='assets/fosil.html'">👁️ 3D</button>
+            <button class="btn" onclick="location.href='assets/vr.html'">🥽 VR</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3>🧬 Secuencias de ADN</h3>
+          <p>Visualiza un modelo simple de ADN y compara secuencias. Reemplaza <code>assets/models/adn.glb</code>.</p>
+          <div class="btn-row">
+            <button class="btn" onclick="location.href='assets/fosil.html'">👁️ 3D</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>🧪 Mini simulación — Selección natural</h2>
+      <p>Ajusta la <strong>presión de selección</strong> y observa cómo cambia la población en generaciones sucesivas.</p>
+      <div class="card">
+        <div class="btn-row" style="justify-content:space-between">
+          <label>Presión de selección: <input type="range" id="sel" min="0.2" max="0.9" step="0.01" value="0.5"></label>
+          <div class="btn-row">
+            <button class="btn" id="step">➡️ Siguiente generación</button>
+            <button class="btn" id="reset">🔄 Reiniciar</button>
+          </div>
+        </div>
+        <canvas id="sim" style="width:100%;height:280px;display:block"></canvas>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>👥 Darwin & Wallace</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>📜 Postulados de la selección natural</h3>
+          <ul>
+            <li>Sobreproducción</li>
+            <li>Variación</li>
+            <li>Adaptación</li>
+            <li>Selección</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>👤 Charles Darwin</h3>
+          <p>Breve biografía y contribuciones. (Sustituye con contenido ampliado — y cita fuentes)</p>
+        </article>
+        <article class="card">
+          <h3>👤 Alfred R. Wallace</h3>
+          <p>Breve biografía y contribuciones. (Sustituye con contenido ampliado — y cita fuentes)</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>Proyecto Exámenes Libres — <strong>Educación Inmversiva</strong></div>
+    <div>belen.acpe@gmail.com · 📞 +56 9 6266 4960</div>
+    <div>👨‍💻 Francisco Pinto — 📧 franciscoandresp@gmail.com · 📞 +56 9 2002 7992</div>
+    <div>Hecho con ❤️ para el Liceo Bicentenario de Excelencia Polivalente San Nicolás</div>
+  </footer>
+
+  <!-- Guide modal -->
+  <div class="modal" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <div class="box">
+      <span class="close" onclick="toggleGuide(false)">✖</span>
+      <h3 id="guideTitle">🧠 Guía rápida</h3>
+      <p><strong>Objetivo (OA2):</strong> interpretar evidencias de evolución; explicar selección natural; reconocer aportes de Darwin & Wallace.</p>
+      <h4>Para el/la docente</h4>
+      <ul>
+        <li>Inicio (5’): activar conocimientos previos con ejemplos locales.</li>
+        <li>Desarrollo (30’): evidencias → simulación → discusión guiada.</li>
+        <li>Cierre (10’): 🎟️ ticket de salida + consignas de estudio.</li>
+      </ul>
+      <h4>Para el/la estudiante</h4>
+      <ul>
+        <li>Explora las tarjetas de evidencias.</li>
+        <li>Prueba la simulación y explica en tus palabras qué observas.</li>
+        <li>Resuelve el 🧪 Quiz OA2.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

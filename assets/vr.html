@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>🥽 Galería VR — Evidencias</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>body,html{background:#000}</style>
+</head>
+<body>
+  <nav class="controls" style="position:fixed;top:0;left:0;right:0;z-index:5">
+    <span class="control-title">🛠️ Controles:</span>
+    <a class="control-btn" href="../index.html">🏠</a>
+    <button class="control-btn" onclick="toggleGuide(true)">🧠</button>
+  </nav>
+
+  <a-scene background="color: #000" renderer="antialias: true">
+    <a-entity position="0 1.6 0">
+      <a-camera wasd-controls look-controls></a-camera>
+    </a-entity>
+
+    <a-entity light="type:ambient; intensity:0.6"></a-entity>
+    <a-entity light="type:directional; intensity:0.8" position="1 3 2"></a-entity>
+
+    <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#222"></a-plane>
+    <a-sky color="#111"></a-sky>
+
+    <a-entity gltf-model="../assets/models/fosil.glb" position="-1 1.2 -3" scale="0.8 0.8 0.8"></a-entity>
+    <a-entity gltf-model="../assets/models/homologia.glb" position="1 1.2 -3" scale="0.8 0.8 0.8"></a-entity>
+    <a-entity gltf-model="../assets/models/adn.glb" position="0 1.2 -1.5" scale="0.5 0.5 0.5"></a-entity>
+
+    <a-text value="Gira la cabeza o arrastra para mirar. En dispositivos compatibles, usa el botón VR." position="-1.5 2 -2.5" color="#fff"></a-text>
+  </a-scene>
+
+  <div class="modal" id="guideModal"><div class="box"><span class="close" onclick="toggleGuide(false)">✖</span><h3>🧠 Guía</h3><p>Usa el botón 🥽 en la esquina para entrar a VR si tu dispositivo lo soporta.</p></div></div>
+  <script src="../js/script.js"></script>
+</body>
+</html>

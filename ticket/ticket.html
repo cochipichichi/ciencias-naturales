@@ -1,0 +1,45 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>🎟️ Ticket de salida — OA2</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <nav class="controls">
+    <span class="control-title">🛠️ Controles:</span>
+    <a class="control-btn" href="../index.html">🏠</a>
+    <button class="control-btn" onclick="handleSpeak()">🗣️</button>
+    <button class="control-btn" onclick="toggleContrast(this)">🌓</button>
+    <button class="control-btn" onclick="fontDelta(1)">A+</button>
+    <button class="control-btn" onclick="fontDelta(-1)">A−</button>
+    <button class="control-btn" onclick="toggleLang(this)">🌐</button>
+    <button class="control-btn" onclick="toggleGuide(true)">🧠</button>
+    <button class="control-btn" onclick="toggleRuler(this)">🔍</button>
+    <span class="spacer"></span>
+    <button class="control-btn" onclick="handleStop()">⏹</button>
+  </nav>
+
+  <main class="section" id="intro">
+    <h1>🎟️ Ticket de salida — OA2</h1>
+    <div class="card">
+      <ol>
+        <li>Escribe una evidencia que <strong>apoye</strong> la evolución y explica por qué.</li>
+        <li>En la simulación, ¿qué variable te ayudó a entender la selección natural?</li>
+        <li>Una idea de Darwin/Wallace que te parezca clave (y por qué).</li>
+      </ol>
+      <p><em>Tip:</em> puedes copiar tus respuestas y pegarlas en Google Classroom o imprimir esta página.</p>
+    </div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+      <a class="btn" href="../index.html">⬅️ Volver</a>
+    </div>
+  </main>
+
+  <div class="modal" id="guideModal"><div class="box"><span class="close" onclick="toggleGuide(false)">✖</span><h3>🧠 Guía</h3><p>Responde con frases breves y ejemplos concretos.</p></div></div>
+  <div id="ruler" class="ruler"></div>
+  <script src="../js/script.js"></script>
+</body>
+</html>

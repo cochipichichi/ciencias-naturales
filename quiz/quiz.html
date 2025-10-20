@@ -1,0 +1,92 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>🧪 Quiz OA2 — Evidencias de la Evolución</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <nav class="controls">
+    <span class="control-title">🛠️ Controles:</span>
+    <a class="control-btn" href="../index.html">🏠</a>
+    <button class="control-btn" onclick="handleSpeak()">🗣️</button>
+    <button class="control-btn" onclick="toggleContrast(this)">🌓</button>
+    <button class="control-btn" onclick="fontDelta(1)">A+</button>
+    <button class="control-btn" onclick="fontDelta(-1)">A−</button>
+    <button class="control-btn" onclick="toggleLang(this)">🌐</button>
+    <button class="control-btn" onclick="toggleGuide(true)">🧠</button>
+    <button class="control-btn" onclick="toggleRuler(this)">🔍</button>
+    <span class="spacer"></span>
+    <button class="control-btn" onclick="handleStop()">⏹</button>
+  </nav>
+
+  <main class="section" id="intro">
+    <h1>🧪 Quiz OA2</h1>
+    <p>Selecciona la alternativa correcta. Al terminar, revisa tu puntaje.</p>
+    <div class="card" id="quizBox"></div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn" onclick="grade()">✅ Revisar</button>
+      <button class="btn" onclick="location.reload()">🔄 Reiniciar</button>
+    </div>
+    <p id="score" style="margin-top:1rem;font-weight:700"></p>
+  </main>
+
+  <div class="modal" id="guideModal"><div class="box"><span class="close" onclick="toggleGuide(false)">✖</span><h3>🧠 Guía</h3><p>Recuerda leer bien cada opción; busca pistas en palabras clave.</p></div></div>
+
+  <div id="ruler" class="ruler"></div>
+  <script src="../js/script.js"></script>
+  <script>
+  const questions = [
+    // base 10 + extras to 25
+    {q:'¿Cuál de las siguientes es una evidencia directa de la evolución?', a:['Registro fósil','Analogía funcional','Aprendizaje cultural','Homeostasis'], c:0},
+    {q:'Las estructuras homólogas indican…', a:['Origen evolutivo común','Misma función, distinto origen','Convergencia cultural','Mutación puntual idéntica'], c:0},
+    {q:'Según la selección natural, ¿qué ocurre primero?', a:['Sobreproducción','Selección','Adaptación fija','Extinción'], c:0},
+    {q:'La variación heredable en una población…', a:['Es materia prima para la selección','Impide la evolución','Elimina adaptaciones','Solo ocurre en plantas'], c:0},
+    {q:'El aporte clave de Wallace fue…', a:['Co-desarrollar la idea de selección natural','Descubrir la doble hélice','Proponer herencia de caracteres adquiridos','Negar la evolución'], c:0},
+    {q:'La embriología comparada revela…', a:['Patrones de desarrollo compartidos','Solo similitudes culturales','Diferencias sin relación','Únicamente rasgos adultos'], c:0},
+    {q:'Las secuencias de ADN permiten…', a:['Medir parentesco evolutivo','Crear fósiles','Eliminar mutaciones','Predecir comportamiento social'], c:0},
+    {q:'Un ejemplo de especiación alopátrica es…', a:['Poblaciones aisladas por barreras geográficas','Intercambio génico continuo','Misma zona sin aislamiento','Mutaciones idénticas simultáneas'], c:0},
+    {q:'La adaptación se define como…', a:['Rasgo que aumenta la aptitud en un ambiente','Cualquier rasgo vistoso','Cambio aleatorio sin efecto','Aprendizaje durante la vida'], c:0},
+    {q:'La selección natural actúa sobre…', a:['Fenotipos','Genes individualmente','Ecosistemas','Átomos'], c:0},
+  ,
+    {"q": "¿Qué indica una alta similitud en secuencias de ADN entre dos especies?", "a": ["Parentesco evolutivo cercano", "No tienen relación", "Analogía funcional", "Evolución convergente segura"], "c": 0},
+    {"q": "¿Qué término describe el surgimiento de nuevas especies?", "a": ["Especiación", "Hibridación", "Homeostasis", "Fotosíntesis"], "c": 0},
+    {"q": "¿Cuál NO es evidencia de evolución?", "a": ["Preferencias culturales", "Registro fósil", "Homologías", "ADN"], "c": 0},
+    {"q": "En selección natural, ¿sobre qué actúa la selección directamente?", "a": ["Fenotipo", "Genotipo aislado", "Especie entera al mismo tiempo", "Bioma"], "c": 0},
+    {"q": "Un ala de murciélago y un brazo humano son…", "a": ["Homólogos", "Análogos", "Sin relación", "Órganos vestigiales"], "c": 0},
+    {"q": "Las alas de aves y mariposas con misma función pero distinto origen son…", "a": ["Análogas", "Homólogas", "Vestigiales", "Idénticas"], "c": 0},
+    {"q": "Un órgano vestigial es…", "a": ["Resto anatómico con función reducida", "Estructura completamente nueva", "Sin valor evidencial", "Producto de aprendizaje"], "c": 0},
+    {"q": "La variación heredable surge por…", "a": ["Mutaciones y recombinación", "Ejercicio físico", "Idioma", "Clima solamente"], "c": 0},
+    {"q": "Un cuello más largo en jirafas por ventaja alimenticia es ejemplo de…", "a": ["Selección direccional", "Selección estabilizadora", "Selección disruptiva", "Deriva genética"], "c": 0},
+    {"q": "La deriva genética es…", "a": ["Cambio aleatorio en frecuencias génicas", "Selección siempre positiva", "Mutación dirigida", "Prueba de análogos"], "c": 0},
+    {"q": "El aislamiento reproductivo evita…", "a": ["Flujo génico entre poblaciones", "Mutaciones", "Selección natural", "Adaptaciones"], "c": 0},
+    {"q": "¿Quién envió un manuscrito a Darwin que impulsó la publicación conjunta?", "a": ["Wallace", "Mendel", "Lamarck", "Lyell"], "c": 0},
+    {"q": "¿Qué postulado implica que no todos los individuos sobreviven y se reproducen?", "a": ["Sobreproducción", "Variación", "Herencia", "Equilibrio"], "c": 0},
+    {"q": "La selección natural requiere que el rasgo sea…", "a": ["Heredable", "Adquirido por práctica", "Igual en todos", "Sólo ambiental"], "c": 0},
+    {"q": "La adaptación depende del…", "a": ["Ambiente específico", "Azar total", "Tamaño corporal", "Color por sí mismo"], "c": 0},
+  ];
+  const box = document.getElementById('quizBox');
+  box.innerHTML = questions.map((o,i)=>`
+    <div style="margin:.75rem 0">
+      <div><strong>${i+1}.</strong> ${o.q}</div>
+      ${o.a.map((opt,j)=>`
+        <label style="display:block;margin:.25rem 0">
+          <input type="radio" name="q${i}" value="${j}"> ${opt}
+        </label>
+      `).join('')}
+    </div>
+  `).join('');
+
+  function grade(){
+    let correct=0;
+    questions.forEach((o,i)=>{
+      const sel = document.querySelector('input[name="q'+i+'"]:checked');
+      if(sel && parseInt(sel.value,10)===o.c) correct++;
+    });
+    document.getElementById('score').textContent = `Puntaje: ${correct}/${questions.length}`;
+  }
+  </script>
+</body>
+</html>
