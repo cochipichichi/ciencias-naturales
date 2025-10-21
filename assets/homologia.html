@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
+  <meta name="theme-color" content="#0c0f10">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>🫱🏻‍🫲🏽 Estructuras homólogas — 3D/AR</title>
@@ -14,7 +15,15 @@
     <span class="control-title">🛠️ Controles:</span>
     <a class="control-btn" href="../index.html">🏠</a>
     <button class="control-btn" onclick="handleSpeak()">🗣️</button>
-    <button class="control-btn" onclick="toggleContrast(this)">🌓</button>
+    <div class="theme-switcher">
+  <button id="themeBtn" class="control-btn" title="Temas (Alt+T)" aria-label="Cambiar tema" onclick="toggleThemeMenu()">🌓</button>
+  <div id="themeMenu" class="theme-menu hidden" role="menu" aria-label="Selector de tema">
+    <button onclick="setTheme('light')" role="menuitem">☀️ Claro</button>
+    <button onclick="setTheme('dark')" role="menuitem">🌙 Oscuro</button>
+    <button onclick="setTheme('high')" role="menuitem">⚡ Alto contraste</button>
+    <button onclick="setTheme('sepia')" role="menuitem">📜 Sepia</button>
+  </div>
+</div>
     <button class="control-btn" onclick="fontDelta(1)">A+</button>
     <button class="control-btn" onclick="fontDelta(-1)">A−</button>
     <button class="control-btn" onclick="toggleLang(this)">🌐</button>

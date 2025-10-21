@@ -21,7 +21,15 @@
     <span class="control-title">🛠️ <span data-i18n-es="Controles" data-i18n-en="Controls">Controles</span>:</span>
     <button class="control-btn" id="home" title="Inicio" aria-label="Inicio" onclick="scrollTopSmooth()">🏠</button>
     <button class="control-btn" id="speak" title="Narrar" aria-label="Narrar" onclick="handleSpeak()">🗣️</button>
-    <button class="control-btn" id="contrast" title="Alto contraste" aria-label="Alto contraste" onclick="toggleContrast(this)">🌓</button>
+    <div class="theme-switcher">
+  <button id="themeBtn" class="control-btn" title="Temas (Alt+T)" aria-label="Cambiar tema" onclick="toggleThemeMenu()">🌓</button>
+  <div id="themeMenu" class="theme-menu hidden" role="menu" aria-label="Selector de tema">
+    <button onclick="setTheme('light')" role="menuitem">☀️ Claro</button>
+    <button onclick="setTheme('dark')" role="menuitem">🌙 Oscuro</button>
+    <button onclick="setTheme('high')" role="menuitem">⚡ Alto contraste</button>
+    <button onclick="setTheme('sepia')" role="menuitem">📜 Sepia</button>
+  </div>
+</div>
     <button class="control-btn" id="inc" title="Aumentar tamaño de letra" aria-label="Aumentar tamaño de letra" onclick="fontDelta(1)">A+</button>
     <button class="control-btn" id="dec" title="Disminuir tamaño de letra" aria-label="Disminuir tamaño de letra" onclick="fontDelta(-1)">A−</button>
     <button class="control-btn" id="lang" title="Cambiar idioma" aria-label="Cambiar a inglés" onclick="toggleLang(this)">🌐</button>
