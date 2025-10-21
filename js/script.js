@@ -130,3 +130,46 @@ document.addEventListener('DOMContentLoaded', startSim);
 if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>navigator.serviceWorker.register('./pwa/sw.js'));
 }
+
+/* TTS PANEL v4 */
+let __ttsUtter = null, __ttsPaused = false;
+function ttsInitPanel(){
+  if(document.getElementById('ttsPanel')) return;
+  const p = document.createElement('div');
+  p.id='ttsPanel';
+  p.style.cssText='position:fixed;right:1rem;bottom:1rem;background:#0f1520;border:1px solid #1f2a37;border-radius:.75rem;padding:.5rem;z-index:80;box-shadow:0 10px 30px rgba(0,0,0,.35);color:#e8f0f7;font:14px system-ui';
+  p.innerHTML = `
+    <div style="display:flex;align-items:center;gap:.5rem;">
+      <strong>🎧 Narrador</strong>
+      <button id="ttsPlay" class="control-btn" style="min-width:auto;padding:.35rem .5rem">▶️</button>
+      <button id="ttsPause" class="control-btn" style="min-width:auto;padding:.35rem .5rem">⏸️</button>
+      <button id="ttsStop" class="control-btn" style="min-width:auto;padding:.35rem .5rem">⏹</button>
+      <label style="display:flex;align-items:center;gap:.35rem;margin-left:.5rem">vel:
+        <input id="ttsRate" type="range" min="0.7" max="1.3" step="0.05" value="1">
+      </label>
+    </div>
+  `;
+  document.body.appendChild(p);
+  const q=(s)=>document.querySelector(s);
+  q('#ttsPlay').onclick = ()=>ttsSpeak();
+  q('#ttsPause').onclick = ()=>ttsPauseResume();
+  q('#ttsStop').onclick = ()=>ttsStop();
+}
+function ttsSpeak(){
+  if(!('speechSynthesis' in window)) return alert('Narrador no soportado');
+  const text = (window.getSelection().toString().trim() || (document.getElementById('intro')?.innerText) || document.title).trim();
+  const rate = parseFloat(document.getElementById('ttsRate')?.value||'1');
+  __ttsUtter = new SpeechSynthesisUtterance(text);
+  const prefer = (lang)=>speechSynthesis.getVoices().find(v=>v.lang.startsWith(lang));
+  const lang = document.documentElement.lang || 'es';
+  __ttsUtter.voice = prefer('es-CL') || prefer(lang) || prefer('es') || prefer('en') || speechSynthesis.getVoices()[0];
+  __ttsUtter.rate = rate; __ttsUtter.pitch = 1.0;
+  speechSynthesis.cancel(); __ttsPaused=false; speechSynthesis.speak(__ttsUtter);
+}
+function ttsPauseResume(){
+  if(!('speechSynthesis' in window)) return;
+  if(speechSynthesis.speaking && !speechSynthesis.paused){ speechSynthesis.pause(); __ttsPaused=true; }
+  else if(__ttsPaused){ speechSynthesis.resume(); __ttsPaused=false; }
+}
+function ttsStop(){ if('speechSynthesis' in window){ speechSynthesis.cancel(); __ttsPaused=false; } }
+document.addEventListener('DOMContentLoaded', ttsInitPanel);
