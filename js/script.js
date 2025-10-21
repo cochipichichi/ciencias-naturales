@@ -1,4 +1,3 @@
-
 // Controls implementation
 const qs = (s,ctx=document)=>ctx.querySelector(s);
 const qsa = (s,ctx=document)=>[...ctx.querySelectorAll(s)];
@@ -131,7 +130,8 @@ if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>navigator.serviceWorker.register('./pwa/sw.js'));
 }
 
-/* TTS PANEL v4 */
+
+/* TTS PANEL v5 */
 let __ttsUtter = null, __ttsPaused = false;
 function ttsInitPanel(){
   if(document.getElementById('ttsPanel')) return;
@@ -150,10 +150,9 @@ function ttsInitPanel(){
     </div>
   `;
   document.body.appendChild(p);
-  const q=(s)=>document.querySelector(s);
-  q('#ttsPlay').onclick = ()=>ttsSpeak();
-  q('#ttsPause').onclick = ()=>ttsPauseResume();
-  q('#ttsStop').onclick = ()=>ttsStop();
+  document.getElementById('ttsPlay').onclick = ()=>ttsSpeak();
+  document.getElementById('ttsPause').onclick = ()=>ttsPauseResume();
+  document.getElementById('ttsStop').onclick = ()=>ttsStop();
 }
 function ttsSpeak(){
   if(!('speechSynthesis' in window)) return alert('Narrador no soportado');
