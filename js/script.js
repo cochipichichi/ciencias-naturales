@@ -1,3 +1,4 @@
+
 // Controls implementation
 const qs = (s,ctx=document)=>ctx.querySelector(s);
 const qsa = (s,ctx=document)=>[...ctx.querySelectorAll(s)];
@@ -131,44 +132,22 @@ if('serviceWorker' in navigator){
 }
 
 
-/* TTS PANEL v5 */
-let __ttsUtter = null, __ttsPaused = false;
-function ttsInitPanel(){
-  if(document.getElementById('ttsPanel')) return;
-  const p = document.createElement('div');
-  p.id='ttsPanel';
-  p.style.cssText='position:fixed;right:1rem;bottom:1rem;background:#0f1520;border:1px solid #1f2a37;border-radius:.75rem;padding:.5rem;z-index:80;box-shadow:0 10px 30px rgba(0,0,0,.35);color:#e8f0f7;font:14px system-ui';
-  p.innerHTML = `
-    <div style="display:flex;align-items:center;gap:.5rem;">
-      <strong>🎧 Narrador</strong>
-      <button id="ttsPlay" class="control-btn" style="min-width:auto;padding:.35rem .5rem">▶️</button>
-      <button id="ttsPause" class="control-btn" style="min-width:auto;padding:.35rem .5rem">⏸️</button>
-      <button id="ttsStop" class="control-btn" style="min-width:auto;padding:.35rem .5rem">⏹</button>
-      <label style="display:flex;align-items:center;gap:.35rem;margin-left:.5rem">vel:
-        <input id="ttsRate" type="range" min="0.7" max="1.3" step="0.05" value="1">
-      </label>
-    </div>
-  `;
-  document.body.appendChild(p);
-  document.getElementById('ttsPlay').onclick = ()=>ttsSpeak();
-  document.getElementById('ttsPause').onclick = ()=>ttsPauseResume();
-  document.getElementById('ttsStop').onclick = ()=>ttsStop();
+// Theme switcher (v6)
+const THEMES=["light","dark","high","sepia"];
+function setTheme(t){
+  if(!THEMES.includes(t)) t="dark";
+  document.documentElement.setAttribute("data-theme",t);
+  try{localStorage.setItem("theme",t)}catch(e){}
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta){ const bg=getComputedStyle(document.documentElement).getPropertyValue("--bg").trim()||"#000"; meta.setAttribute("content",bg); }
+  const m=document.getElementById("themeMenu"); if(m) m.classList.add("hidden");
 }
-function ttsSpeak(){
-  if(!('speechSynthesis' in window)) return alert('Narrador no soportado');
-  const text = (window.getSelection().toString().trim() || (document.getElementById('intro')?.innerText) || document.title).trim();
-  const rate = parseFloat(document.getElementById('ttsRate')?.value||'1');
-  __ttsUtter = new SpeechSynthesisUtterance(text);
-  const prefer = (lang)=>speechSynthesis.getVoices().find(v=>v.lang.startsWith(lang));
-  const lang = document.documentElement.lang || 'es';
-  __ttsUtter.voice = prefer('es-CL') || prefer(lang) || prefer('es') || prefer('en') || speechSynthesis.getVoices()[0];
-  __ttsUtter.rate = rate; __ttsUtter.pitch = 1.0;
-  speechSynthesis.cancel(); __ttsPaused=false; speechSynthesis.speak(__ttsUtter);
+function initTheme(){
+  let t=null; try{t=localStorage.getItem("theme")}catch(e){}
+  if(!t){ const prefersDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches; t=prefersDark?"dark":"light"; }
+  setTheme(t);
 }
-function ttsPauseResume(){
-  if(!('speechSynthesis' in window)) return;
-  if(speechSynthesis.speaking && !speechSynthesis.paused){ speechSynthesis.pause(); __ttsPaused=true; }
-  else if(__ttsPaused){ speechSynthesis.resume(); __ttsPaused=false; }
-}
-function ttsStop(){ if('speechSynthesis' in window){ speechSynthesis.cancel(); __ttsPaused=false; } }
-document.addEventListener('DOMContentLoaded', ttsInitPanel);
+function toggleThemeMenu(){ const m=document.getElementById("themeMenu"); if(m) m.classList.toggle("hidden"); }
+document.addEventListener("click",(e)=>{ const m=document.getElementById("themeMenu"); const b=document.getElementById("themeBtn"); if(!m||!b) return; if(!m.contains(e.target)&&!b.contains(e.target)) m.classList.add("hidden"); });
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") document.getElementById("themeMenu")?.classList.add("hidden"); });
+document.addEventListener("DOMContentLoaded",initTheme);
