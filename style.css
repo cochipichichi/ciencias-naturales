@@ -1,4 +1,18 @@
 
+/* === Themes v6 === */
+:root[data-theme="light"]{--bg:#ffffff;--bg-soft:#f6f8fa;--text:#0f172a;--muted:#475569;--accent:#0ea5e9;--ok:#16a34a;--warn:#d97706;--danger:#dc2626;--btn:#e5e7eb;}
+:root[data-theme="dark"]{--bg:#0c0f10;--bg-soft:#12161a;--text:#e8f0f7;--muted:#9fb3c8;--accent:#67e8f9;--ok:#34d399;--warn:#f59e0b;--danger:#f87171;--btn:#1f2937;}
+:root[data-theme="high"]{--bg:#000;--bg-soft:#000;--text:#fff;--muted:#e5e7eb;--accent:#0ff;--ok:#0f6;--warn:#fc0;--danger:#f44;--btn:#000;}
+:root[data-theme="sepia"]{--bg:#fdf6e3;--bg-soft:#f7f2df;--text:#3b2f2f;--muted:#675b4d;--accent:#b58900;--ok:#2f855a;--warn:#b7791f;--danger:#c53030;--btn:#efe5cc;}
+.theme-switcher{position:relative;display:inline-block}
+.theme-menu{position:absolute;right:0;top:2.4rem;background:var(--bg-soft);border:1px solid #2b3441;border-radius:.5rem;padding:.35rem;display:flex;flex-direction:column;min-width:180px;z-index:90;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.theme-menu.hidden{display:none}
+.theme-menu button{background:none;border:none;color:var(--text);text-align:left;padding:.4rem .75rem;cursor:pointer;border-radius:.35rem}
+.theme-menu button:hover{background:var(--accent);color:var(--bg)}
+/* Basic body colors (ensure variables apply) */
+body{background:var(--bg);color:var(--text)}
+
+
 :root{
   --bg:#0c0f10;
   --bg-soft:#12161a;
